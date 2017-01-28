@@ -1,4 +1,3 @@
-
 module.exports = function(app, dbPool){
     
     app.get('/', function (req, res) {
@@ -15,5 +14,15 @@ module.exports = function(app, dbPool){
         });
         
         res.render('index.html');
+    });
+    
+    app.get('/signin', function(req, res) {
+    
+        res.render('signin.html'); 
+    });
+    
+    app.post('/submit.do', function(req, res) {
+       
+        console.log(req.body);
     });
 }
