@@ -11,12 +11,12 @@ body {
 }
 #page-wrapper {
   padding: 0 15px;
-  min-height: 568px;
+  min-height: 752px;
   background-color: white;
 }
 #page-wrapper-sign {
   padding: 0 15px;
-  min-height: 568px;
+  min-height: 752px;
   background-color: white;
 }
 @media (min-width: 768px) {

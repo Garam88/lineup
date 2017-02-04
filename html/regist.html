@@ -62,11 +62,51 @@
         <!--본문 영역-->
         <div id="page-wrapper">
         
-            <h1 class="page-header">다음 일정 정보(종류 - 시간 - 장소 - 상태)가 표시될 예정입니다.</h1>
-            
-            
-            
-            
+            <h3 class="page-header">일정 정보 관리</h3>
+            <br/>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            신규 일정 정보 입력
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <label>일정명</label>
+                                            <input class="form-control" id="scheduleName">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>종류</label>
+                                            <select class="form-control" id="scheduleCategory">
+                                                <option value="1">시합</option>
+                                                <option value="2">연습시합</option>
+                                                <option value="3">연습(or레슨)</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>날짜</label>
+                                            <input class="form-control" type="date" id="scheduleDate">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>시간</label>
+                                            <input class="form-control" id="scheduleTime">
+                                            <p class="help-block">ex) 8시 30분, 12시</p>
+                                        </div>
+                                    </form>
+                                    <button type="button" id="sendButton" class="btn btn-primary btn-lg btn-block">등록</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     
@@ -83,6 +123,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
+    
+    <script src="js/regist.js"></script>
 
 </body>
 

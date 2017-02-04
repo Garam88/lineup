@@ -11,8 +11,7 @@ module.exports = function(app, dbPool){
     });
     
     app.get('/main', function(req, res) {
-        console.log(req.session.userNid);
-        
+                
         if(!req.session.userNid){
             res.redirect('/');
             return;
@@ -20,6 +19,46 @@ module.exports = function(app, dbPool){
         else {
             res.render('main.html');
         }
+    });
+    
+    app.get('/regist', function(req, res) {
+                
+        if(!req.session.userNid){
+            res.redirect('/');
+            return;
+        }
+        else {
+            res.render('regist.html');
+        }
+    });
+    
+    app.get('/history', function(req, res) {
+                
+        if(!req.session.userNid){
+            res.redirect('/');
+            return;
+        }
+        else {
+            res.render('history.html');
+        }
+    });
+    
+    app.get('/manage', function(req, res) {
+                
+        if(!req.session.userNid){
+            res.redirect('/');
+            return;
+        }
+        else {
+            res.render('manage.html');
+        }
+    });
+    
+    app.get('/logout', function(req, res) {
+                
+        req.session.destroy();
+        res.redirect('/');
+        
     });
     
     //INSERT INTO USER_INFO(USER_ID, USER_PW, REG_DTM) VALUES('admin', '2020', now())
@@ -86,6 +125,14 @@ module.exports = function(app, dbPool){
                     
                     if(rows.length > 0){
                         req.session.userNid = rows[0].USER_NID;
+                        
+                        if(rows[0].USER_NID == 2){
+                            req.session.userAuth = 1;
+                        }
+                        else {
+                            req.session.userAuth = 2;
+                        }
+                        
                         result = true;
                     }
                     
@@ -104,5 +151,28 @@ module.exports = function(app, dbPool){
         
     });
     
+    app.post('/registSchedule.do' , function(req, res) {
+        
+        var queryString = "INSERT INTO TEAM_SCHEDULE(NAME, CATEGORY, SCHDATE, SCHTIME, REGDATE) " +
+                            "VALUES('"+req.body.name+"', '"+req.body.category+"', '"+req.body.date+"', '"+req.body.time+"', NOW())";
+        console.log(queryString);
+        
+        dbPool.getConnection(function(err, connection){
+           connection.query(queryString, function(err, rows, fields){
+               
+                connection.release();
+
+                if(!err){
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify('success'));
+                }
+                else{
+                    console.log(err);
+                    res.writeHead(210, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify('fail'));
+                }
+            });
+        });
+    });
     
 }
