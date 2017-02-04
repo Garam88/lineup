@@ -42,13 +42,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="/regist"><i class="fa glyphicon-pencil fa-fw"></i> 참가신청</a>
-                        </li>
-                        <li>
-                            <a href="/history"><i class="fa fa-bar-chart-o fa-fw"></i> 경기이력</a>
-                        </li>
-                        <li>
-                            <a href="/manage"><i class="fa fa-edit fa-fw"></i> 일정관리</a>
+                            <a href="/regist"><i class="fa fa-edit fa-fw"></i> 일정등록</a>
                         </li>
                         <li>
                             <a href="/logout"><i class="fa fa-sign-in fa-fw"></i> 로그아웃</a>
@@ -61,11 +55,33 @@
         
         <!--본문 영역-->
         <div id="page-wrapper">
-        
-            <h1 class="page-header">다음 일정 정보(종류 - 시간 - 장소 - 상태)가 표시될 예정입니다.</h1>
+            <br/>
             
-            
-            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    일정 목록
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>일정명</th>
+                                    <th>종류</th>
+                                    <th>일시</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbd">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
             
         </div>
     </div>
@@ -83,6 +99,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 

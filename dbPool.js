@@ -5,5 +5,6 @@ module.exports = mysql.createPool({
     password : '28a7a71c',
     database : 'heroku_fa4c2875999f3d0',
     connectionLimit : 20,
-    waitForConnections : false
+    waitForConnections : false,
+    timezone: 'utc'
 });

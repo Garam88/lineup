@@ -66,8 +66,9 @@ module.exports = function(app, dbPool){
        
         dbPool.getConnection(function(err, connection){
             
-            connection.query("INSERT INTO USER_INFO(USER_ID, USER_PW, REG_DTM, USER_NAME) VALUES('"+req.body.id+"', '"+req.body.pw+"', NOW(), '"+req.body.name+"')", 
-                             function(err, rows, fields){
+            var queryString = "INSERT INTO USER_INFO(USER_ID, USER_PW, REG_DTM, USER_NAME) VALUES('"+req.body.id+"', '"+req.body.pw+"', NOW(), '"+req.body.name+"')";
+            console.log(queryString);
+            connection.query(queryString, function(err, rows, fields){
                 connection.release();
                 
                 if(!err){
@@ -87,9 +88,12 @@ module.exports = function(app, dbPool){
     app.post('/checkid.do' , function(req, res) {
         dbPool.getConnection(function(err, connection){
             
-            connection.query("SELECT USER_ID FROM USER_INFO WHERE USER_ID = '"+req.body.id+"'", function(err, rows, fields){
+            var queryString = "SELECT USER_ID FROM USER_INFO WHERE USER_ID = '"+req.body.id+"'";
+            console.log(queryString);
+            connection.query(queryString, function(err, rows, fields){
                 if(!err){
                     console.log(rows.length);
+                    connection.release();
                     
                     var result = true;
                     
@@ -115,11 +119,12 @@ module.exports = function(app, dbPool){
     app.post('/login.do' , function(req, res) {
         dbPool.getConnection(function(err, connection){
             
-            console.log("SELECT USER_NID FROM USER_INFO WHERE USER_ID = '"+req.body.id+"' AND USER_PW = '"+req.body.pw+"'");
-            
-            connection.query("SELECT USER_NID FROM USER_INFO WHERE USER_ID = '"+req.body.id+"' AND USER_PW = '"+req.body.pw+"'", function(err, rows, fields){
+            var queryString = "SELECT USER_NID FROM USER_INFO WHERE USER_ID = '"+req.body.id+"' AND USER_PW = '"+req.body.pw+"'";
+            console.log(queryString);
+            connection.query(queryString, function(err, rows, fields){
                 if(!err){
                     console.log(rows);
+                    connection.release();
                     
                     var result = false;
                     
@@ -153,7 +158,7 @@ module.exports = function(app, dbPool){
     
     app.post('/registSchedule.do' , function(req, res) {
         
-        var queryString = "INSERT INTO TEAM_SCHEDULE(NAME, CATEGORY, SCHDATE, SCHTIME, REGDATE) " +
+        var queryString = "INSERT INTO TEAM_SCHEDULE(SCH_NAME, SCH_CATEGORY, SCH_DATE, SCH_TIME, REG_DATE) " +
                             "VALUES('"+req.body.name+"', '"+req.body.category+"', '"+req.body.date+"', '"+req.body.time+"', NOW())";
         console.log(queryString);
         
@@ -173,6 +178,32 @@ module.exports = function(app, dbPool){
                 }
             });
         });
+    });
+    
+    app.post('/selectScheduleList.do' , function(req, res) {
+        dbPool.getConnection(function(err, connection){
+            
+            var queryString = 'SELECT @ROWNUM := @ROWNUM + 1 num, SCH_NID nid, SCH_NAME name, SCH_CATEGORY category, SCH_DATE "date", SCH_TIME "time" '+
+                                'FROM TEAM_SCHEDULE, (SELECT @ROWNUM := 0) R ORDER BY SCH_DATE DESC';
+            
+            console.log(queryString);
+            connection.query(queryString, function(err, rows, fields){
+                if(!err){
+                    console.log(rows);
+                    
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify(rows));
+                } 
+                else {
+                    console.log(err);
+                    connection.release();
+                    res.writeHead(210, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify('fail'));
+                }
+
+            });
+        });
+        
     });
     
 }
