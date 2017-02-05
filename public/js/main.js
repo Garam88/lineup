@@ -1,4 +1,6 @@
 $(function(){
+    $("#tbd").html("<tr><td colspan='4' style='text-align:center; padding:70px'><img src='img/loading.gif' width='50' height='50'/></td></tr>");
+    
     $.ajax({
         type: "POST",
         url: "/selectScheduleList.do",    
@@ -31,11 +33,13 @@ $(function(){
             
         },     
         error:function(e){  
-            alert('데이터 로딩 중 문제가 발생하였습니다.');
+            console.log(e);
         }
     });
     
     $("#tbd").on("click", ".line", function(){
-       console.log($(this).attr("nid"));
+        
+        location.href = "/selectSchedule?nid="+$(this).attr("nid");
+        
     });
 });

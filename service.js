@@ -32,32 +32,24 @@ module.exports = function(app, dbPool){
         }
     });
     
-    app.get('/history', function(req, res) {
-                
-        if(!req.session.userNid){
-            res.redirect('/');
-            return;
-        }
-        else {
-            res.render('history.html');
-        }
-    });
-    
-    app.get('/manage', function(req, res) {
-                
-        if(!req.session.userNid){
-            res.redirect('/');
-            return;
-        }
-        else {
-            res.render('manage.html');
-        }
-    });
-    
     app.get('/logout', function(req, res) {
                 
         req.session.destroy();
         res.redirect('/');
+        
+    });
+    
+    app.get('/selectSchedule', function(req, res) {
+                
+        console.log("nid : " + req.query.nid);
+        
+        if(!req.session.userNid){
+            res.redirect('/');
+            return;
+        }
+        else {
+            res.render('schDetail.html');
+        }
         
     });
     
